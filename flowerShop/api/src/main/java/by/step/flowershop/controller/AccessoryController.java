@@ -25,7 +25,7 @@ public class AccessoryController {
         accessoryAbstractService.delete(id);
     }
 
-    @PostMapping
+    @PostMapping("/addAccessory")
     void addAccessory(@RequestBody AccessoryDto accessoryDto) {
         accessoryAbstractService.addAccessory(accessoryDto);
     }

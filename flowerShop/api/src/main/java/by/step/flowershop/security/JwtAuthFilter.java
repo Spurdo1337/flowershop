@@ -1,5 +1,6 @@
 package by.step.flowershop.security;
 
+import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,10 +27,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
+
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
+            HttpServletRequest request, @NonNull
+    HttpServletResponse response, @NonNull
             FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader(AUTHORIZATION);
         final String userEmail;
@@ -49,6 +51,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+            filterChain.doFilter(request, response);
         }
         filterChain.doFilter(request, response);
     }
